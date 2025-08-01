@@ -2,12 +2,14 @@ from urllib.parse import quote_plus
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
-username = quote_plus("kiran")
-password = quote_plus("Nihar@123")
+username = quote_plus(os.getenv("USERNAME"))
+password = quote_plus(os.getenv("PASSWORD"))
 # MongoDB setup
-client = MongoClient(f"mongodb+srv://{username}:{password}@cluster0.aotevze.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient(f"mongodb+srv://{username}:{password}@cluster0.cceoqrt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["todo_db"]
 todos = db["todos"]
 
@@ -39,4 +41,4 @@ def delete(id):
     return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
